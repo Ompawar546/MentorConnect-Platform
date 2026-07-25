@@ -17,6 +17,7 @@ import com.mentorconnect.userservice.repository.MentorProfileRepository;
 import com.mentorconnect.userservice.repository.StudentProfileRepository;
 import com.mentorconnect.userservice.repository.UserRepository;
 import com.mentorconnect.userservice.service.interfaces.AuthService;
+import com.mentorconnect.userservice.security.JwtService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtService jwtService;
+    
     @Transactional
     @Override
     public RegisterResponse registerStudent(RegisterStudentRequest request) {
@@ -164,8 +167,23 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponse login(LoginRequest request) {
 
-        return null;
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        String token = jwtService.generateToken(user);
+
+        return LoginResponse.builder()
+                .success(true)
+                .message("Login Successful")
+                .token(token)
+                .userId(user.getId())
+                .username(user.getUsername())
+                .role(user.getRole())
+                .build();
     }
     
     

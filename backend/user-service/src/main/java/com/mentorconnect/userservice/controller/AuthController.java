@@ -3,10 +3,15 @@ package com.mentorconnect.userservice.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.mentorconnect.userservice.dto.request.LoginRequest;
 import com.mentorconnect.userservice.dto.request.RegisterMentorRequest;
 import com.mentorconnect.userservice.dto.request.RegisterStudentRequest;
+import com.mentorconnect.userservice.dto.response.LoginResponse;
 import com.mentorconnect.userservice.dto.response.RegisterResponse;
 import com.mentorconnect.userservice.service.interfaces.AuthService;
 
@@ -38,4 +43,17 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
+    
+    
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        return ResponseEntity.ok(authService.login(request));
+    }
+    
+    
+    
+    
 }

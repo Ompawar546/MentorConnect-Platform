@@ -125,27 +125,12 @@ public class AuthServiceImpl implements AuthService {
 
         user.setEmailVerified(false);
 
-        // Save User
+     // Save User
         User savedUser = userRepository.save(user);
 
-        // Create Mentor Profile
+        // Create Empty Mentor Profile
         MentorProfile mentorProfile = new MentorProfile();
-
         mentorProfile.setUser(savedUser);
-
-        mentorProfile.setCompany(request.getCompany());
-
-        mentorProfile.setDesignation(request.getDesignation());
-
-        mentorProfile.setExperienceYears(request.getExperienceYears());
-
-        mentorProfile.setExpertise(request.getExpertise());
-
-        mentorProfile.setBio(request.getBio());
-
-        mentorProfile.setSocialLinks(request.getSocialLinks());
-
-        mentorProfile.setWebsite(request.getWebsite());
 
         // Save Mentor Profile
         mentorProfileRepository.save(mentorProfile);

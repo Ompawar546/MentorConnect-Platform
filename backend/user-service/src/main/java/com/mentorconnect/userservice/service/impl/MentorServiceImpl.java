@@ -11,6 +11,7 @@ import com.mentorconnect.userservice.dto.request.UpdateMentorRequest;
 import com.mentorconnect.userservice.dto.response.MentorCardResponse;
 import com.mentorconnect.userservice.dto.response.MentorPrivateResponse;
 import com.mentorconnect.userservice.dto.response.MentorPublicResponse;
+import com.mentorconnect.userservice.dto.response.UserIdResponse;
 import com.mentorconnect.userservice.entity.MentorProfile;
 import com.mentorconnect.userservice.entity.User;
 import com.mentorconnect.userservice.enums.Skill;
@@ -114,4 +115,26 @@ public class MentorServiceImpl implements MentorService {
                 .map(mentorMapper::toCardResponse)
                 .toList();
     }
+    
+    
+    @Override
+    public UserIdResponse getMentorUserId(Long mentorProfileId) {
+
+        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Mentor profile not found."));
+
+        return new UserIdResponse(mentorProfile.getUser().getId());
+    }
+    
+    @Override
+    public MentorPrivateResponse getPrivateProfileByUserId(Long userId) {
+
+        MentorProfile mentorProfile = mentorProfileRepository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Mentor profile not found."));
+
+        return mentorMapper.toPrivateResponse(mentorProfile);
+    }
+    
 }

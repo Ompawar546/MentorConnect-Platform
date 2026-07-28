@@ -6,6 +6,7 @@ import com.mentorconnect.userservice.dto.request.UpdateMentorRequest;
 import com.mentorconnect.userservice.dto.response.MentorCardResponse;
 import com.mentorconnect.userservice.dto.response.MentorPrivateResponse;
 import com.mentorconnect.userservice.dto.response.MentorPublicResponse;
+import com.mentorconnect.userservice.dto.response.UserIdResponse;
 import com.mentorconnect.userservice.enums.Skill;
 
 public interface MentorService {
@@ -23,5 +24,11 @@ public interface MentorService {
             String company,
             Boolean verified,
             Integer experienceYears);
+    
+    UserIdResponse getMentorUserId(Long mentorProfileId);
+
+    MentorPrivateResponse getPrivateProfileByUserId(Long userId);
+    
+    
 
 }

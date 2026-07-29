@@ -41,19 +41,35 @@ public class JwtAuthenticationFilter implements WebFilter {
 
             if (jwtService.isTokenValid(jwt)) {
 
-                String email = jwtService.extractUsername(jwt);
-                String role = jwtService.extractRole(jwt);
+            	String email = jwtService.extractUsername(jwt);
+            	String role = jwtService.extractRole(jwt);
+            	Long userId = jwtService.extractUserId(jwt);
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                email,
-                                null,
-                                List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+            	// Remove any client-supplied header and add our trusted one
+            	ServerHttpRequest mutatedRequest = request.mutate()
+            			.headers(headers -> {
+            			    headers.remove("X-User-Id");
+            			    headers.remove("X-User-Role");
 
-                return chain.filter(exchange)
-                        .contextWrite(
-                                ReactiveSecurityContextHolder.withSecurityContext(
-                                        Mono.just(new SecurityContextImpl(authentication))));
+            			    headers.add("X-User-Id", String.valueOf(userId));
+            			    headers.add("X-User-Role", role);
+            			})
+            	        .build();
+
+            	ServerWebExchange mutatedExchange = exchange.mutate()
+            	        .request(mutatedRequest)
+            	        .build();
+
+            	UsernamePasswordAuthenticationToken authentication =
+            	        new UsernamePasswordAuthenticationToken(
+            	                email,
+            	                null,
+            	                List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+
+            	return chain.filter(mutatedExchange)
+            	        .contextWrite(
+            	                ReactiveSecurityContextHolder.withSecurityContext(
+            	                        Mono.just(new SecurityContextImpl(authentication))));
             }
 
         } catch (JwtException | IllegalArgumentException ex) {

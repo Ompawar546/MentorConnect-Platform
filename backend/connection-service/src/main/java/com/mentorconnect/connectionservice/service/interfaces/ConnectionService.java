@@ -2,20 +2,20 @@ package com.mentorconnect.connectionservice.service.interfaces;
 
 import java.util.List;
 
-import com.mentorconnect.connectionservice.entity.ConnectionRequest;
+import com.mentorconnect.connectionservice.dto.response.ConnectionResponse;
 
 public interface ConnectionService {
 
     void sendRequest(Long mentorProfileId, Long studentId);
 
-    List<ConnectionRequest> getPendingRequests(Long mentorId);
+    List<ConnectionResponse> getPendingRequests(Long mentorId);
 
     void acceptRequest(Long requestId);
 
     void rejectRequest(Long requestId);
 
-    List<ConnectionRequest> getMyStudents(Long mentorId);
+    List<ConnectionResponse> getMyStudents(Long mentorId);
 
-    List<ConnectionRequest> getMyMentors(Long studentId);
+    List<ConnectionResponse> getMyMentors(Long studentId);
 
 }

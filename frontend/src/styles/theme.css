@@ -1,0 +1,44 @@
+:root{
+
+    --primary:#0F3040;
+
+    --secondary:#464858;
+
+    --accent:#A56F63;
+
+    --highlight:#D99B7F;
+
+    --white:#ffffff;
+
+    --light:#f5f7fa;
+
+    --text:#1f2937;
+}
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:Inter,Segoe UI,sans-serif;
+}
+
+body{
+
+    background:white;
+
+    color:var(--text);
+}
+
+a{
+
+    text-decoration:none;
+}
+
+button{
+
+    cursor:pointer;
+}

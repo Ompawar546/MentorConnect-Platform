@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mentorconnect.connectionservice.dto.response.ConnectionResponse;
 import com.mentorconnect.connectionservice.dto.response.UserIdResponse;
 import com.mentorconnect.connectionservice.entity.ConnectionRequest;
 import com.mentorconnect.connectionservice.enums.ConnectionStatus;
+import com.mentorconnect.connectionservice.exception.ResourceAlreadyExistsException;
 import com.mentorconnect.connectionservice.feign.UserServiceClient;
 import com.mentorconnect.connectionservice.repository.ConnectionRequestRepository;
 import com.mentorconnect.connectionservice.service.interfaces.ConnectionService;
+import com.mentorconnect.connectionservice.dto.response.StudentResponse;
+import com.mentorconnect.connectionservice.dto.response.MentorPrivateResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +38,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                 mentorUserId,
                 ConnectionStatus.PENDING)
                 .ifPresent(r -> {
-                    throw new RuntimeException("Request already sent.");
+                    throw new ResourceAlreadyExistsException("Request already sent.");
                 });
 
         ConnectionRequest request = ConnectionRequest.builder()
@@ -46,16 +50,18 @@ public class ConnectionServiceImpl implements ConnectionService {
 
         repository.save(request);
     }
-    
-    
+
     @Override
-    public List<ConnectionRequest> getPendingRequests(Long mentorId) {
+    public List<ConnectionResponse> getPendingRequests(Long mentorId) {
 
         return repository.findByMentorUserIdAndStatus(
                 mentorId,
-                ConnectionStatus.PENDING);
+                ConnectionStatus.PENDING)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
-    
+
     @Override
     public void acceptRequest(Long requestId) {
 
@@ -67,8 +73,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
         repository.save(request);
     }
-    
-    
+
     @Override
     public void rejectRequest(Long requestId) {
 
@@ -80,22 +85,68 @@ public class ConnectionServiceImpl implements ConnectionService {
 
         repository.save(request);
     }
-    
+
     @Override
-    public List<ConnectionRequest> getMyStudents(Long mentorId) {
+    public List<ConnectionResponse> getMyStudents(Long mentorId) {
 
         return repository.findByMentorUserIdAndStatus(
                 mentorId,
-                ConnectionStatus.ACCEPTED);
+                ConnectionStatus.ACCEPTED)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
-    
+
     @Override
-    public List<ConnectionRequest> getMyMentors(Long studentId) {
+    public List<ConnectionResponse> getMyMentors(Long studentId) {
 
         return repository.findByStudentUserIdAndStatus(
                 studentId,
-                ConnectionStatus.ACCEPTED);
+                ConnectionStatus.ACCEPTED)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
+
     
     
+    
+    
+    private ConnectionResponse mapToResponse(ConnectionRequest request) {
+
+        StudentResponse student =
+                userServiceClient.getStudentByUserId(request.getStudentUserId());
+
+        MentorPrivateResponse mentor =
+                userServiceClient.getMentorByUserId(request.getMentorUserId());
+
+        ConnectionResponse response = new ConnectionResponse();
+
+        response.setId(request.getId());
+
+        response.setStudentUserId(request.getStudentUserId());
+        response.setMentorUserId(request.getMentorUserId());
+
+        // Student Details
+        response.setStudentName(
+                student.getFirstName() + " " + student.getLastName());
+        response.setStudentEmail(student.getEmail());
+        response.setStudentProfilePicture(student.getProfilePictureUrl());
+
+        // Mentor Details
+        response.setMentorName(
+                mentor.getFirstName() + " " + mentor.getLastName());
+        response.setMentorEmail(mentor.getEmail());
+        response.setMentorProfilePicture(mentor.getProfilePictureUrl());
+        response.setMentorCompany(mentor.getCurrentCompany());
+        response.setMentorDesignation(mentor.getCurrentDesignation());
+        response.setMentorExperienceYears(mentor.getExperienceYears());
+
+        response.setStatus(request.getStatus());
+        response.setRequestedAt(request.getRequestedAt());
+        response.setRespondedAt(request.getRespondedAt());
+
+        return response;
+    }
+
 }

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.mentorconnect.connectionservice.entity.ConnectionRequest;
+import com.mentorconnect.connectionservice.dto.response.ConnectionResponse;
 import com.mentorconnect.connectionservice.service.interfaces.ConnectionService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,10 @@ public class ConnectionController {
                     .body("Only mentors can view pending requests.");
         }
 
-        return ResponseEntity.ok(connectionService.getPendingRequests(mentorId));
+        List<ConnectionResponse> response =
+                connectionService.getPendingRequests(mentorId);
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{requestId}/accept")
@@ -87,7 +90,10 @@ public class ConnectionController {
                     .body("Only mentors can view students.");
         }
 
-        return ResponseEntity.ok(connectionService.getMyStudents(mentorId));
+        List<ConnectionResponse> response =
+                connectionService.getMyStudents(mentorId);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/my-mentors")
@@ -100,6 +106,9 @@ public class ConnectionController {
                     .body("Only students can view mentors.");
         }
 
-        return ResponseEntity.ok(connectionService.getMyMentors(studentId));
+        List<ConnectionResponse> response =
+                connectionService.getMyMentors(studentId);
+
+        return ResponseEntity.ok(response);
     }
 }

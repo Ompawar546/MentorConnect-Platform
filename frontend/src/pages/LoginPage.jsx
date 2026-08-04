@@ -68,6 +68,8 @@ function LoginPage() {
 
             <div className="login-card">
 
+                <div className="login-logo">MC</div>
+
                 <h1>Welcome Back</h1>
 
                 <p>Login to MentorConnect</p>
@@ -111,6 +113,8 @@ function LoginPage() {
                     </button>
 
                 </form>
+
+                <div className="divider"><span>or</span></div>
 
                 <div className="register-links">
 

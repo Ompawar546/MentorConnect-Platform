@@ -112,6 +112,16 @@ public class ConnectionServiceImpl implements ConnectionService {
     
     
     
+    @Override
+    public MentorPrivateResponse getMentorProfile(Long mentorUserId) {
+
+        return userServiceClient.getMentorByUserId(mentorUserId);
+
+    }
+    
+    
+    
+    
     private ConnectionResponse mapToResponse(ConnectionRequest request) {
 
         StudentResponse student =

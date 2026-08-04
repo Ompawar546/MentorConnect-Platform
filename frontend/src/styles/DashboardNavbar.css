@@ -1,27 +1,25 @@
-import "../styles/DashboardNavbar.css";
+.dashboard-navbar{
 
-function DashboardNavbar() {
+    background:white;
 
-    return (
+    padding:25px 35px;
 
-        <div className="dashboard-navbar">
+    border-radius:18px;
 
-            <h2>
+    margin-bottom:35px;
 
-                Welcome,
-
-                {" "}
-
-                {localStorage.getItem("username")}
-
-                👋
-
-            </h2>
-
-        </div>
-
-    );
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
 
 }
 
-export default DashboardNavbar;
+.dashboard-navbar h2{
+
+    margin:0;
+
+    color:#1f2937;
+
+    font-size:30px;
+
+    font-weight:700;
+
+}

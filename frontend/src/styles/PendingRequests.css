@@ -1,0 +1,159 @@
+.pending-request-card {
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+    margin-bottom: 25px;
+
+    transition: .3s;
+}
+
+.pending-request-card:hover {
+
+    transform: translateY(-4px);
+}
+
+.pending-request-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.pending-avatar {
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #8b5e52;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+.pending-avatar img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.pending-info {
+
+    flex: 1;
+}
+
+.pending-info h3 {
+
+    margin: 0;
+
+    color: #1d2a44;
+
+    font-size: 22px;
+}
+
+.pending-info p {
+
+    margin-top: 8px;
+
+    color: #666;
+}
+
+.pending-actions {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.accept-btn {
+
+    background: #22c55e;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 24px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.accept-btn:hover {
+
+    background: #16a34a;
+}
+
+.reject-btn {
+
+    background: #ef4444;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 24px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.reject-btn:hover {
+
+    background: #dc2626;
+}
+
+.no-pending {
+
+    background: white;
+
+    padding: 60px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 18px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}

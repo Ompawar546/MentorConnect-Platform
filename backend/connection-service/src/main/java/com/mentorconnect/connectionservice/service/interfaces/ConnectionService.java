@@ -1,7 +1,7 @@
 package com.mentorconnect.connectionservice.service.interfaces;
 
 import java.util.List;
-
+import com.mentorconnect.connectionservice.dto.response.MentorPrivateResponse;
 import com.mentorconnect.connectionservice.dto.response.ConnectionResponse;
 
 public interface ConnectionService {
@@ -17,5 +17,7 @@ public interface ConnectionService {
     List<ConnectionResponse> getMyStudents(Long mentorId);
 
     List<ConnectionResponse> getMyMentors(Long studentId);
+    
+    MentorPrivateResponse getMentorProfile(Long mentorUserId);
 
 }

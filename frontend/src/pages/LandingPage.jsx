@@ -14,6 +14,8 @@ function LandingPage() {
 
       <section className="hero">
         <div className="hero-left">
+          <span className="hero-badge">★ Trusted by 500+ engineers</span>
+
           <h1>
             Find the Right Mentor
             <br />
@@ -35,9 +37,25 @@ function LandingPage() {
               Become a Mentor
             </Link>
           </div>
+
+          <div className="hero-stats">
+            <div className="stat">
+              <strong>1,200+</strong>
+              <span>Sessions completed</span>
+            </div>
+            <div className="stat">
+              <strong>150+</strong>
+              <span>Active mentors</span>
+            </div>
+            <div className="stat">
+              <strong>4.9/5</strong>
+              <span>Average rating</span>
+            </div>
+          </div>
         </div>
 
         <div className="hero-right">
+          <div className="hero-glow" />
           <img src={HeroImage} alt="Mentor Connect" />
         </div>
       </section>

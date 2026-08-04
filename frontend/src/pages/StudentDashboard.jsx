@@ -1,42 +1,11 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import DashboardSidebar from "../components/DashboardSidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
-import MentorCard from "../components/MentorCard";
-
-import api from "../services/api";
 
 import "../styles/StudentDashboard.css";
 
 function StudentDashboard() {
-
-    const [mentors, setMentors] = useState([]);
-
-    useEffect(() => {
-
-        fetchMentors();
-
-    }, []);
-
-    const fetchMentors = async () => {
-
-        try {
-
-            const response = await api.get("/api/mentors");
-
-            console.log(response.data);
-
-            setMentors(response.data);
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-        }
-
-    };
 
     return (
 
@@ -48,18 +17,60 @@ function StudentDashboard() {
 
                 <DashboardNavbar />
 
-                <h1>Available Mentors</h1>
+                <h1>Student Dashboard</h1>
 
-                <div className="mentor-grid">
+                <div className="dashboard-cards">
 
-                    {mentors.map((mentor) => (
+                    <div className="dashboard-card">
 
-                        <MentorCard
-                            key={mentor.id}
-                            mentor={mentor}
-                        />
+                        <h2>Find Mentors</h2>
 
-                    ))}
+                        <p>
+                            Explore experienced mentors and send connection requests.
+                        </p>
+
+                        <Link
+                            to="/student/mentors"
+                            className="dashboard-btn"
+                        >
+                            Explore Mentors
+                        </Link>
+
+                    </div>
+
+                    <div className="dashboard-card">
+
+                        <h2>My Mentors</h2>
+
+                        <p>
+                            View all your connected mentors and access their profiles.
+                        </p>
+
+                        <Link
+                            to="/student/my-mentors"
+                            className="dashboard-btn"
+                        >
+                            View Mentors
+                        </Link>
+
+                    </div>
+
+                    <div className="dashboard-card">
+
+                        <h2>My Profile</h2>
+
+                        <p>
+                            View and update your academic and personal profile.
+                        </p>
+
+                        <Link
+                            to="/student/profile"
+                            className="dashboard-btn"
+                        >
+                            Open Profile
+                        </Link>
+
+                    </div>
 
                 </div>
 

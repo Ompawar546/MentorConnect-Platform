@@ -8,9 +8,9 @@
 
     justify-content:center;
 
-    align-items:center;
+    align-items:flex-start;
 
-    padding:120px 20px;
+    padding:50px 20px 40px;
 }
 
 .login-card{
@@ -23,7 +23,35 @@
 
     padding:45px;
 
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    box-shadow:0 20px 50px -15px rgba(0,0,0,.35);
+
+    animation:fadeUp .4s ease;
+}
+
+@keyframes fadeUp{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+.login-logo{
+
+    width:52px;
+    height:52px;
+
+    margin:0 auto 18px;
+
+    border-radius:12px;
+
+    background:var(--highlight);
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:700;
+    font-size:18px;
 }
 
 .login-card h1{
@@ -82,6 +110,8 @@
 .form-group input:focus{
 
     border-color:var(--highlight);
+
+    box-shadow:0 0 0 3px rgba(0,0,0,.05);
 }
 
 .login-btn{
@@ -110,11 +140,38 @@
 .login-btn:hover{
 
     background:var(--accent);
+
+    transform:translateY(-1px);
+}
+
+.divider{
+
+    display:flex;
+    align-items:center;
+    text-align:center;
+
+    color:#aaa;
+    font-size:13px;
+
+    margin:28px 0 8px;
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+    flex:1;
+    height:1px;
+    background:#eee;
+}
+
+.divider span{
+    padding:0 12px;
 }
 
 .register-links{
 
-    margin-top:30px;
+    margin-top:12px;
 
     display:flex;
 
@@ -123,6 +180,12 @@
     gap:10px;
 
     align-items:center;
+}
+
+.register-links p{
+    margin-bottom:0;
+    color:#666;
+    font-size:14px;
 }
 
 .register-links a{

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.mentorconnect.connectionservice.dto.response.MentorPrivateResponse;
 
 import com.mentorconnect.connectionservice.dto.response.ConnectionResponse;
 import com.mentorconnect.connectionservice.service.interfaces.ConnectionService;
@@ -111,4 +112,28 @@ public class ConnectionController {
 
         return ResponseEntity.ok(response);
     }
+    
+    
+    @GetMapping("/mentor/{mentorUserId}")
+    public ResponseEntity<?> getMentorProfile(
+
+            @PathVariable Long mentorUserId,
+            @RequestHeader("X-User-Role") String role) {
+
+        if (!"STUDENT".equals(role)) {
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Only students can view mentor profiles.");
+
+        }
+
+        MentorPrivateResponse response =
+                connectionService.getMentorProfile(mentorUserId);
+
+        return ResponseEntity.ok(response);
+
+    }
+    
+    
+    
 }

@@ -1,24 +1,43 @@
+import { useState } from "react";
 import api from "../services/api";
 
 import "../styles/MentorCard.css";
 
 function MentorCard({ mentor }) {
 
+    const [loading, setLoading] = useState(false);
+    const [requested, setRequested] = useState(false);
+
     const sendRequest = async () => {
 
         try {
 
+            setLoading(true);
+
             await api.post(`/api/connections/request/${mentor.id}`);
 
-            alert("Connection Request Sent");
+            setRequested(true);
 
         }
-
         catch (error) {
 
             console.error(error);
 
-            alert("Unable to send request");
+            if (error.response?.data) {
+
+                alert(error.response.data);
+
+            }
+            else {
+
+                alert("Unable to send request");
+
+            }
+
+        }
+        finally {
+
+            setLoading(false);
 
         }
 
@@ -84,9 +103,14 @@ function MentorCard({ mentor }) {
 
             <button
                 onClick={sendRequest}
+                disabled={loading || requested}
             >
 
-                Connect
+                {loading
+                    ? "Sending..."
+                    : requested
+                        ? "Pending"
+                        : "Connect"}
 
             </button>
 
